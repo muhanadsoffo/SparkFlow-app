@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spark_flow/data/constants.dart';
+import 'package:spark_flow/data/notifiers.dart';
 import 'package:spark_flow/views/widget_tree.dart';
 
 
@@ -17,15 +20,29 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    initThemeMode();
+    super.initState();
+  }
 
   @override
 
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.light(),
-      debugShowCheckedModeBanner: false,
-      home: WidgetTree()
-    );
+    return ValueListenableBuilder(valueListenable: isDarkModeNotifier, builder: (context, darkMode, child) {
+      return MaterialApp(
+          theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Color(0xfffb8301),brightness:darkMode ? Brightness.dark : Brightness.light),),
+          debugShowCheckedModeBanner: false,
+          home: WidgetTree()
+      );
+    },);
 
+
+  }
+
+  void initThemeMode() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool? repeat = prefs.getBool(KConstants.themeModeKey);
+    isDarkModeNotifier.value = repeat ?? false;
   }
 }
