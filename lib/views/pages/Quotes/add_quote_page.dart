@@ -1,15 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:spark_flow/data/models/quote.dart';
 
-class AddQuotePage extends StatelessWidget {
+import '../../../data/local/boxes.dart';
+import '../../Widgets/appbar_widget.dart';
+
+class AddQuotePage extends StatefulWidget {
   const AddQuotePage({super.key});
+
+  @override
+  State<AddQuotePage> createState() => _AddQuotePageState();
+}
+
+class _AddQuotePageState extends State<AddQuotePage> {
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppbarWidget(),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("hey")
+          Align(alignment: Alignment.topCenter),
+
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              "Add a Quote, talk to yourself !",
+              style: TextStyle(fontSize: 25),
+            ),
+          ),
+          SizedBox(height: 15),
+          TextField(
+            controller: controller,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter a Quote',
+            ),
+          ),
+          SizedBox(height: 15),
+          FilledButton(
+            onPressed: () {
+              final title = controller.text.trim();
+              if (title.isNotEmpty) {
+                setState(() {
+                  Boxes.quotesBox.put(
+                    'key_${controller.text}',
+                    Quote(title, true),
+                  );
+                });
+              } else if (title.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(seconds: 5),
+                    behavior: SnackBarBehavior.floating,
+                    content: Text("Text should not be empty"),
+                  ),
+                );
+              }
+            },
+            child: Text("Add a Quote"),
+          ),
         ],
       ),
     );

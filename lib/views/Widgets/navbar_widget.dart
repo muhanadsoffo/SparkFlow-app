@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:spark_flow/data/notifiers.dart';
+import 'package:spark_flow/core/notifiers.dart';
 
 class NavbarWidget extends StatelessWidget {
   const NavbarWidget({super.key});
@@ -41,7 +41,7 @@ class NavbarWidget extends StatelessWidget {
               selectedPageNotifier.value = value;
             },
             selectedIndex: value,
-            backgroundColor: Color(0xFF037cb9),
+            backgroundColor: Color(0xFF00bcc9),
           ),
         );
       },

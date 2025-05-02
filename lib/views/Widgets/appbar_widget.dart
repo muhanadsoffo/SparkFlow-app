@@ -1,0 +1,66 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../core/constants.dart';
+import '../../core/notifiers.dart';
+
+class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
+  const AppbarWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: RichText(
+        text: TextSpan(
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white, // fallback
+          ),
+          children: const [
+            TextSpan(
+              text: "Spark",
+              style: TextStyle(
+                color: Color(0xfffc6e00),
+                fontSize: 30, // orange
+              ),
+            ),
+            TextSpan(
+              text: "Flow",
+              style: TextStyle(
+                color: Color(0xFF004F8D),
+                fontSize: 30, // deep blue
+              ),
+            ),
+          ],
+        ),
+      ),
+      centerTitle: true,
+      actions: [
+        IconButton(
+          onPressed: () async {
+            isDarkModeNotifier.value = !isDarkModeNotifier.value;
+            final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+            await prefs.setBool(
+              KConstants.themeModeKey,
+              isDarkModeNotifier.value,
+            );
+          },
+
+          icon: ValueListenableBuilder(
+            valueListenable: isDarkModeNotifier,
+            builder: (context, value, child) {
+              return Icon(value ? Icons.light_mode_rounded : Icons.dark_mode);
+            },
+          ),
+        ),
+      ],
+      backgroundColor: Color(0xFF00bcc9),
+    );
+  }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spark_flow/data/constants.dart';
-import 'package:spark_flow/data/notifiers.dart';
+import 'package:spark_flow/core/constants.dart';
+import 'package:spark_flow/data/local/hive_config.dart';
+import 'package:spark_flow/core/notifiers.dart';
 import 'package:spark_flow/views/widget_tree.dart';
 
 
-void main() {
-
+void main() async{
+   await initHive();
   runApp(const MyApp());
 }
 
