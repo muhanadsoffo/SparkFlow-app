@@ -44,9 +44,16 @@ class _AddQuotePageState extends State<AddQuotePage> {
               final title = controller.text.trim();
               if (title.isNotEmpty) {
                 setState(() {
-                  Boxes.quotesBox.put(
-                    'key_${controller.text}',
-                    Quote(title, true),
+                  Boxes.quotesBox.put('key_$title', Quote(title, true));
+                  controller.clear();
+                  FocusScope.of(context).unfocus();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      duration: Duration(seconds: 5),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.green,
+                      content: Text("Quote added successfully!"),
+                    ),
                   );
                 });
               } else if (title.isEmpty) {
@@ -54,6 +61,7 @@ class _AddQuotePageState extends State<AddQuotePage> {
                   SnackBar(
                     duration: Duration(seconds: 5),
                     behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.red,
                     content: Text("Text should not be empty"),
                   ),
                 );

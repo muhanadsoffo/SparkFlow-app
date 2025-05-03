@@ -7,7 +7,8 @@ import 'package:spark_flow/views/widget_tree.dart';
 
 
 void main() async{
-   await initHive();
+  WidgetsFlutterBinding.ensureInitialized();
+  await initHive();
   runApp(const MyApp());
 }
 
