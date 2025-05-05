@@ -16,16 +16,20 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: [
           Image.asset('assets/images/logo.png'),
-          Center(
-            child: Text("this is home"),
-
+          Center(child: Text("this is home")),
+          FilledButton(
+            onPressed: () {
+              NotificationService.showInstantNotification(
+                id: 1,
+                title: "testing notification",
+                body: "hey there this is the body",
+              );
+            },
+            child: Text("show notification"),
           ),
-          FilledButton(onPressed: () {
-            NotificationService.showInstantNotification(id: 1, title: "testing notification", body: "hey there this is the body");
-          }, child: Text("show notification")),
-
         ],
       ),
-    );;
+    );
+    ;
   }
 }

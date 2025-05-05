@@ -9,8 +9,7 @@ class NotificationService {
   static Future<void> init() async {
     // Timezone setup
     tz.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation('Europe/Amsterdam')); // change as needed
-
+    tz.setLocalLocation(tz.getLocation('Europe/Istanbul'));
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     const settings = InitializationSettings(android: android);
 
@@ -70,5 +69,9 @@ class NotificationService {
       scheduled = scheduled.add(const Duration(days: 1));
     }
     return scheduled;
+  }
+
+  static Future<void> cancelNotification(int id) async {
+    await _plugin.cancel(id);
   }
 }

@@ -7,6 +7,8 @@ import 'package:spark_flow/data/local/hive_config.dart';
 import 'package:spark_flow/core/notifiers.dart';
 import 'package:spark_flow/views/widget_tree.dart';
 
+import 'core/services/daily_quote_service.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     initThemeMode();
+    initNotifications();
     super.initState();
   }
 
@@ -50,5 +53,9 @@ class _MyAppState extends State<MyApp> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final bool? repeat = prefs.getBool(KConstants.themeModeKey);
     isDarkModeNotifier.value = repeat ?? false;
+  }
+  void initNotifications() async{
+    final prefs = await SharedPreferences.getInstance();
+    isDailyQuoteEnabled.value= prefs.getBool(KConstants.quoteNotificationKey) ?? false;
   }
 }
