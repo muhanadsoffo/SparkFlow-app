@@ -1,8 +1,29 @@
 import 'dart:math';
-
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:spark_flow/data/models/quote.dart';
+import 'package:workmanager/workmanager.dart';
 import 'notification_service.dart';
+
+void quoteNotificationTaskDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    if(task=="dailyQuoteTask"){
+      await Hive.initFlutter();
+      Hive.registerAdapter(QuoteAdapter());
+      await Hive.openBox<Quote>('quotes');
+      await NotificationService.init();
+
+      // 🧠 Use your existing logic
+      await DailyQuoteService.scheduleDailyQuoteNotification(
+        hour: 14,   // <- you can make this dynamic later
+        minute: 42,
+      );
+
+      return Future.value(true);
+    }
+    return Future.value(false);
+  });
+}
 
 class DailyQuoteService {
   static Future<void> scheduleDailyQuoteNotification({
