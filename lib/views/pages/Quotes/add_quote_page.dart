@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spark_flow/core/constants.dart';
+import 'package:spark_flow/core/services/daily_quote_service.dart';
+import 'package:spark_flow/core/services/notification_service.dart';
 import 'package:spark_flow/data/models/quote.dart';
 
 import '../../../data/local/boxes.dart';
@@ -43,8 +47,14 @@ class _AddQuotePageState extends State<AddQuotePage> {
             onPressed: () {
               final title = controller.text.trim();
               if (title.isNotEmpty) {
-                setState(() {
+                setState(() async{
                   Boxes.quotesBox.put('key_$title', Quote(title, true));
+                  final prefs = await SharedPreferences.getInstance();
+                  final isEnabled = prefs.getBool(KConstants.quoteNotificationKey) ?? false;
+                  if(isEnabled){
+                    await NotificationService.cancelNotification(3);
+                    await DailyQuoteService.scheduleDailyQuoteNotification(hour: 10, minute: 0);
+                  }
                   controller.clear();
                   FocusScope.of(context).unfocus();
                   ScaffoldMessenger.of(context).showSnackBar(

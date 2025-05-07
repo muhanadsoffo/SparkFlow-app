@@ -6,7 +6,7 @@ import 'package:spark_flow/core/services/permission_service.dart';
 import 'package:spark_flow/data/local/hive_config.dart';
 import 'package:spark_flow/core/notifiers.dart';
 import 'package:spark_flow/views/widget_tree.dart';
-import 'package:workmanager/workmanager.dart';
+
 
 import 'core/services/daily_quote_service.dart';
 
@@ -16,10 +16,6 @@ void main() async{
   await NotificationService.init();
   await PermissionServices.requestNotificationPermission();
   await initHive();
-  await Workmanager().initialize(
-    quoteNotificationTaskDispatcher, // not called, just passed
-    isInDebugMode: true,
-  );
   runApp(const MyApp());
 }
 

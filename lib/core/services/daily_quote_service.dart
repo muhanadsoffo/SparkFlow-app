@@ -1,29 +1,14 @@
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spark_flow/core/constants.dart';
 import 'package:spark_flow/data/models/quote.dart';
 import 'package:workmanager/workmanager.dart';
 import 'notification_service.dart';
 
-void quoteNotificationTaskDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
-    if(task=="dailyQuoteTask"){
-      await Hive.initFlutter();
-      Hive.registerAdapter(QuoteAdapter());
-      await Hive.openBox<Quote>('quotes');
-      await NotificationService.init();
 
-      // 🧠 Use your existing logic
-      await DailyQuoteService.scheduleDailyQuoteNotification(
-        hour: 14,   // <- you can make this dynamic later
-        minute: 42,
-      );
-
-      return Future.value(true);
-    }
-    return Future.value(false);
-  });
-}
 
 class DailyQuoteService {
   static Future<void> scheduleDailyQuoteNotification({
@@ -31,27 +16,19 @@ class DailyQuoteService {
     required int minute,
   }) async {
     final Box<Quote> box = Hive.box<Quote>('quotes');
+    final quotes = box.values.toList();
+    if (quotes.isEmpty) return;
+    final prefs = await SharedPreferences.getInstance();
+    int currentIndex= prefs.getInt(KConstants.quoteIndexKEy)?? 0;
 
-    if (box.isEmpty) return;
-    // getting all quotes with true status
-    final activeQuotes = box.values.where((q) => q.status==true).toList();
+
     // if nothing left then reset all status
-    if(activeQuotes.isEmpty){
-      for(int i=0; i<box.length; i++){
-        final quote =box.getAt(i);
-        if(quote != null){
-          quote.status= true;
-          quote.save();
-        }
+    if(currentIndex>=quotes.length){
+      currentIndex=0;
 
       }
-      activeQuotes.addAll(box.values.where((q) => q.status== true));
-    }
-    //now choosing a random quote from the database
-    final random= Random();
-    final selectedQuote = activeQuotes[random.nextInt(activeQuotes.length)];
-    selectedQuote.status= false;
-    await selectedQuote.save();
+      final selectedQuote= quotes[currentIndex];
+    await prefs.setInt(KConstants.quoteIndexKEy, currentIndex+1);
 
     await NotificationService.scheduleDailyNotification(
       id: 3,

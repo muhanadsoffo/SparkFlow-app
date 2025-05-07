@@ -34,17 +34,14 @@ class _NotificationSwitchWidgetState extends State<NotificationSwitchWidget> {
               isDailyQuoteEnabled.value,
             );
 
-            if (value == true) {
-              await Workmanager().registerPeriodicTask(
-                "daily_quote_task_id",
-                "dailyQuoteTask",
-                frequency: const Duration(hours: 24),
-                constraints: Constraints(
-                  networkType: NetworkType.not_required,
-                ),
+            if (isDailyQuoteEnabled.value == true) {
+              await DailyQuoteService.scheduleDailyQuoteNotification(
+                hour: 10,
+                minute: 0,
               );
+
             } else {
-              await Workmanager().cancelByUniqueName("daily_quote_task_id");
+              await NotificationService.cancelNotification(3);
               final box = Hive.box<Quote>('quotes');
               for (final quote in box.values) {
                 quote.status = true;
