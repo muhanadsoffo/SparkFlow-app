@@ -26,6 +26,7 @@ class _NotificationSwitchWidgetState extends State<NotificationSwitchWidget> {
           title: const Text("Daily notification"),
           subtitle: Text(value ? "Enabled" : "Disabled"),
           value: value,
+
           onChanged: (value) async {
             isDailyQuoteEnabled.value = value;
             final prefs = await SharedPreferences.getInstance();
@@ -35,11 +36,7 @@ class _NotificationSwitchWidgetState extends State<NotificationSwitchWidget> {
             );
 
             if (isDailyQuoteEnabled.value == true) {
-              await DailyQuoteService.scheduleDailyQuoteNotification(
-                hour: 10,
-                minute: 0,
-              );
-
+              await DailyQuoteService.scheduleDailyQuoteNotification();
             } else {
               await NotificationService.cancelNotification(3);
               final box = Hive.box<Quote>('quotes');

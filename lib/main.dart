@@ -8,14 +8,12 @@ import 'package:spark_flow/core/notifiers.dart';
 import 'package:spark_flow/views/widget_tree.dart';
 
 
-import 'core/services/daily_quote_service.dart';
-
-
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService.init();
   await PermissionServices.requestNotificationPermission();
   await initHive();
+
   runApp(const MyApp());
 }
 

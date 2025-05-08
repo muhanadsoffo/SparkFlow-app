@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spark_flow/views/pages/settings_page.dart';
 
 import '../../core/constants.dart';
 import '../../core/notifiers.dart';
@@ -55,6 +56,11 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
             },
           ),
         ),
+        IconButton(onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return SettingsPage();
+          },));
+        }, icon: Icon(Icons.settings)),
       ],
       backgroundColor: Color(0xFF00bcc9),
     );

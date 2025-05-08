@@ -53,7 +53,7 @@ class _AddQuotePageState extends State<AddQuotePage> {
                   final isEnabled = prefs.getBool(KConstants.quoteNotificationKey) ?? false;
                   if(isEnabled){
                     await NotificationService.cancelNotification(3);
-                    await DailyQuoteService.scheduleDailyQuoteNotification(hour: 10, minute: 0);
+                    await DailyQuoteService.scheduleDailyQuoteNotification();
                   }
                   controller.clear();
                   FocusScope.of(context).unfocus();
