@@ -18,19 +18,22 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
         child: Column(children: [Center(child: Text("this is projects"))]),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return AddProjectPage();
-              },
-            ),
-          );
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Color(0xfffc8300),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 15.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return AddProjectPage();
+                },
+              ),
+            );
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xfffc8300),
+        ),
       ),
     );
   }

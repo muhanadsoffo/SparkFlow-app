@@ -15,4 +15,18 @@ class PermissionServices {
     }
     return false;
   }
+
+  static Future<bool> requestGalleryPermission() async{
+    final status = await Permission.photos.status;
+    if(status.isGranted){
+      return true;
+    }else if( status.isDenied || status.isLimited){
+      final result = await Permission.photos.request();
+      return result.isGranted;
+    }else if( status.isPermanentlyDenied){
+      await openAppSettings();
+      return false;
+    }
+    return false;
+  }
 }

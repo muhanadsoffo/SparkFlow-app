@@ -23,129 +23,135 @@ class _QuotesPageState extends State<QuotesPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children:[
+          children: [
             NotificationSwitchWidget(),
-            Expanded(child:ValueListenableBuilder(
-              valueListenable: Boxes.quotesBox.listenable(),
-              builder: (context, Box<Quote> box, _) {
-                final quotes = box.values.toList();
+            Expanded(
+              child: ValueListenableBuilder(
+                valueListenable: Boxes.quotesBox.listenable(),
+                builder: (context, Box<Quote> box, _) {
+                  final quotes = box.values.toList();
 
-                if (quotes.isEmpty) {
-                  return EmptyPageWidget(title: 'quotes');
-                }
+                  if (quotes.isEmpty) {
+                    return EmptyPageWidget(title: 'quotes');
+                  }
 
-                return ListView.builder(
-                  itemCount: box.length,
-                  itemBuilder: (context, index) {
-                    final quote = box.getAt(index);
-                    if (quote == null) return SizedBox();
+                  return ListView.builder(
+                    itemCount: box.length,
+                    itemBuilder: (context, index) {
+                      final quote = box.getAt(index);
+                      if (quote == null) return SizedBox();
 
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      shadowColor: Colors.lightBlue,
-                      surfaceTintColor: Colors.cyan,
-                      margin: EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        title: Text(
-                          quote.quoteTitle,
-                          // make sure it's `title` not `quoteTitle`
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                        shadowColor: Colors.lightBlue,
+                        surfaceTintColor: Colors.cyan,
+                        margin: EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
                           ),
-                        ),
-                        subtitle: Text(
-                          quote.status ? "Status: ✅ true" : "Status: ❌ false",
-                          style: TextStyle(
-                            color: quote.status ? Colors.green : Colors.red,
-                            fontSize: 14,
-                          ),
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder:
-                                      (_) => EditItemWidget(
-                                    initialValue: quote.quoteTitle,
-                                    title: "Edit Quote",
-                                    onSave: (newValue) {
-                                      quote.quoteTitle = newValue;
-                                      quote.save();
-                                    },
-                                  ),
-                                );
-                              },
-                              icon: Icon(Icons.edit),
+                          title: Text(
+                            quote.quoteTitle,
+                            // make sure it's `title` not `quoteTitle`
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
                             ),
-                            IconButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text("Deleting"),
-                                      content: Text(
-                                        "You are about to delete this quote!",
-                                      ),
-                                      actions: [
-                                        FilledButton(
-                                          onPressed: () => Navigator.pop(context),
-                                          child: Text("Close"),
-                                        ),
-                                        FilledButton(
-                                          onPressed: () {
-                                            box.deleteAt(
-                                              index,
-                                            ); // ✅ delete from `box`
-                                            Navigator.pop(context);
+                          ),
+                          subtitle: Text(
+                            quote.status ? "Status: ✅ true" : "Status: ❌ false",
+                            style: TextStyle(
+                              color: quote.status ? Colors.green : Colors.red,
+                              fontSize: 14,
+                            ),
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder:
+                                        (_) => EditItemWidget(
+                                          initialValue: quote.quoteTitle,
+                                          title: "Edit Quote",
+                                          onSave: (newValue) {
+                                            quote.quoteTitle = newValue;
+                                            quote.save();
                                           },
-                                          style: FilledButton.styleFrom(
-                                            backgroundColor: Colors.deepOrange,
-                                          ),
-                                          child: Text("Yes"),
                                         ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              icon: Icon(Icons.delete),
-                            ),
-                          ],
+                                  );
+                                },
+                                icon: Icon(Icons.edit),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text("Deleting"),
+                                        content: Text(
+                                          "You are about to delete this quote!",
+                                        ),
+                                        actions: [
+                                          FilledButton(
+                                            onPressed:
+                                                () => Navigator.pop(context),
+                                            child: Text("Close"),
+                                          ),
+                                          FilledButton(
+                                            onPressed: () {
+                                              box.deleteAt(
+                                                index,
+                                              ); // ✅ delete from `box`
+                                              Navigator.pop(context);
+                                            },
+                                            style: FilledButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.deepOrange,
+                                            ),
+                                            child: Text("Yes"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                icon: Icon(Icons.delete),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ), )
-
-          ]
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return AddQuotePage();
-              },
-            ),
-          );
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Color(0xfffc8300),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 15.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return AddQuotePage();
+                },
+              ),
+            );
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xfffc8300),
+        ),
       ),
     );
   }

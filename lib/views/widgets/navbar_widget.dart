@@ -1,3 +1,4 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:spark_flow/core/notifiers.dart';
@@ -10,39 +11,28 @@ class NavbarWidget extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: selectedPageNotifier,
       builder: (context, value, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            navigationBarTheme: NavigationBarThemeData(
-              labelTextStyle: MaterialStateProperty.all(
-                TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: Colors.white, // match your icon/text color
-                ),
-              ),
-            ),
+        return ConvexAppBar(
+          style: TabStyle.reactCircle,
+          gradient: LinearGradient(
+            colors: [Color(0xFF00bcc9), Color(0xFF004F8D)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          child: NavigationBar(
-            destinations: [
-              NavigationDestination(
-                icon: Icon(Icons.textsms_rounded),
-                label: "Quotes",
-              ),
-              NavigationDestination(
-                icon: Icon(CupertinoIcons.home),
-                label: "Home",
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.code_outlined),
-                label: "Projects",
-              ),
-            ],
-            onDestinationSelected: (int value) {
-              selectedPageNotifier.value = value;
-            },
-            selectedIndex: value,
-            backgroundColor: Color(0xFF00bcc9),
-          ),
+          activeColor: Colors.white,
+          color: Colors.white70,
+          elevation: 8,
+
+          initialActiveIndex: value,
+          height: 65,
+
+          items: [
+            TabItem(icon: Icons.textsms_rounded, title: 'Quotes'),
+            TabItem(icon: Icons.home, title: 'Home'),
+            TabItem(icon: Icons.code_rounded, title: 'Projects'),
+          ],
+          onTap: (index) {
+            selectedPageNotifier.value = index;
+          },
         );
       },
     );

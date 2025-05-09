@@ -11,6 +11,7 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+
       title: RichText(
         text: TextSpan(
           style: TextStyle(
@@ -52,7 +53,7 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
           icon: ValueListenableBuilder(
             valueListenable: isDarkModeNotifier,
             builder: (context, value, child) {
-              return Icon(value ? Icons.light_mode_rounded : Icons.dark_mode);
+              return Icon(value ? Icons.light_mode_rounded : Icons.dark_mode_rounded);
             },
           ),
         ),
@@ -62,7 +63,19 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
           },));
         }, icon: Icon(Icons.settings)),
       ],
-      backgroundColor: Color(0xFF00bcc9),
+      backgroundColor: Colors.transparent,
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF00bcc9),
+              Color(0xFF004F8D),
+            ],
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+          ),
+        ),
+      ),
     );
   }
 

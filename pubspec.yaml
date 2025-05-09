@@ -48,6 +48,7 @@ dependencies:
       url: https://github.com/fluttercommunity/flutter_workmanager.git
       path: workmanager
       ref: main
+  convex_bottom_bar: ^3.2.0
 
 
 dev_dependencies:
