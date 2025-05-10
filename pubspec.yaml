@@ -49,6 +49,7 @@ dependencies:
       path: workmanager
       ref: main
   convex_bottom_bar: ^3.2.0
+  image_picker: ^1.1.2
 
 
 dev_dependencies:
