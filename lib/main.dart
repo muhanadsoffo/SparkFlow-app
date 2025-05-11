@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spark_flow/core/constants.dart';
 import 'package:spark_flow/core/services/notification_service.dart';
@@ -7,12 +9,16 @@ import 'package:spark_flow/data/local/hive_config.dart';
 import 'package:spark_flow/core/notifiers.dart';
 import 'package:spark_flow/views/widget_tree.dart';
 
+import 'data/models/project.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService.init();
   await PermissionServices.requestNotificationPermission();
+
   await initHive();
+
 
   runApp(const MyApp());
 }

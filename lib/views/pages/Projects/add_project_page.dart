@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:spark_flow/core/services/permission_service.dart';
 import 'package:spark_flow/data/models/project.dart';
+import 'package:spark_flow/data/models/task_status.dart';
 
 import '../../../data/local/boxes.dart';
 import '../../Widgets/appbar_widget.dart';
@@ -192,6 +193,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                           description: description,
                           imagePath: _selectedImage?.path,
                           createdAt: DateTime.now(),
+                          status: TaskStatus.notStarted
                         ),
                       );
                       titleController.clear();

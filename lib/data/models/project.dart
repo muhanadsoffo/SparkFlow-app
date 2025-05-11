@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
-import 'todo.dart';
+import 'package:spark_flow/data/models/task_status.dart';
+import 'todos.dart';
 
 part 'project.g.dart';
 
@@ -19,14 +20,17 @@ class Project extends HiveObject{
   @HiveField(3)
   DateTime createdAt;
 
-  @HiveField(4)
-  List<Todo>? todos;
+  @HiveField(5)
+  TaskStatus status;
 
+  @HiveField(6)
+  List<Todos>? todos;
   Project({
     required this.title,
     required this.description,
     this.imagePath,
     required this.createdAt,
     this.todos,
+    required this.status,
 });
 }
