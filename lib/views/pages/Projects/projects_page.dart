@@ -11,6 +11,7 @@ import 'package:spark_flow/views/pages/Projects/project_details.dart';
 import '../../../data/local/boxes.dart';
 import 'add_project_page.dart';
 import 'package:date_format/date_format.dart';
+
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({super.key});
 
@@ -35,7 +36,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
             return GridView.count(
               crossAxisCount: 2,
               crossAxisSpacing: 5,
-              childAspectRatio: 0.75,
+              childAspectRatio: 0.70,
               mainAxisSpacing: 5,
               children:
                   projects.map((project) {
@@ -47,9 +48,14 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     final total = todos.length;
                     return GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return ProjectDetails(project: project);
-                        },));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProjectDetails(project: project);
+                            },
+                          ),
+                        );
                       },
                       child: Card(
                         shape: RoundedRectangleBorder(
@@ -62,25 +68,29 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             Stack(
                               alignment: Alignment.bottomLeft,
                               children: [
-                                Container(
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(16),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(16),
+                                  ),
+                                  child: Container(
+                                    height: 120,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image:
+                                            project.imagePath != null
+                                                ? FileImage(
+                                                  File(project.imagePath!),
+                                                )
+                                                : AssetImage(
+                                                  'assets/images/l.png',
+                                                ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      color:
+                                          project.imagePath == null
+                                              ? Colors.grey[300]
+                                              : null,
                                     ),
-                                    image:
-                                        project.imagePath != null
-                                            ? DecorationImage(
-                                              image: FileImage(
-                                                File(project.imagePath!),
-                                              ),
-                                              fit: BoxFit.cover,
-                                            )
-                                            : null,
-                                    color:
-                                        project.imagePath == null
-                                            ? Colors.grey[300]
-                                            : null,
                                   ),
                                 ),
                                 Container(
@@ -95,9 +105,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                       begin: Alignment.bottomCenter,
                                       end: Alignment.topCenter,
                                     ),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(16),
-                                    ),
                                   ),
                                   child: Text(
                                     project.title,
@@ -106,7 +113,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                       shadows: [
-                                        Shadow(blurRadius: 10, color: Colors.black),
+                                        Shadow(
+                                          blurRadius: 10,
+                                          color: Colors.black,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -131,15 +141,52 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                   ),
                                 ),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
 
                                   children: [
                                     Text(
-                                      "$done /$total Tasks",
-                                      style: TextStyle(fontSize: 12),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      project.status.label,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                    Text("Created at: ${DateFormat('MMM dd, yyyy').format(project.createdAt)}"),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "$done /$total Tasks",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF004F8D),
+                                          ),
+                                        ),
+                                        Text(
+                                          total > 0
+                                              ? "${((done / total) * 100).toStringAsFixed(0)}% Done"
+                                              : "0% Done",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF004F8D),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 4),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Text(
+                                        "Created at: ${DateFormat('MMM dd, yyyy').format(project.createdAt)}",
+                                        style: TextStyle(fontSize: 10),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

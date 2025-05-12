@@ -21,7 +21,8 @@ class _AddQuotePageState extends State<AddQuotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarWidget(),
+      appBar: AppBar( title: Text("Add a Quote"),
+        backgroundColor: Color(0xFFff8000),),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

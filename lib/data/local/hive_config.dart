@@ -5,22 +5,17 @@ import 'package:spark_flow/data/models/todos.dart';
 
 import '../models/task_status.dart';
 
-
 Future<void> initHive() async {
   await Hive.initFlutter();
+
+  // *************** Regıstering Adapters *********************
   Hive.registerAdapter(TaskStatusAdapter());
-  // ************* QUOTES *****************
   Hive.registerAdapter(QuoteAdapter());
-  await Hive.openBox<Quote>('quotes');
-
-  // **************** Projects *****************
   Hive.registerAdapter(ProjectAdapter());
-  await Hive.openBox<Project>('projects');
-
-  // ****************** Todos ******************
   Hive.registerAdapter(TodosAdapter());
+
+  // ************* Opening Boxes *****************
+  await Hive.openBox<Quote>('quotes');
+  await Hive.openBox<Project>('projects');
   await Hive.openBox<Todos>('todos');
-
- // ******************* TaskStatus Enum ***************
-
 }

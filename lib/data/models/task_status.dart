@@ -15,4 +15,17 @@ enum TaskStatus{
   @HiveField(2)
   finished ,
 
+
+}
+extension TaskStatusExtension on TaskStatus {
+  String get label {
+    switch (this) {
+      case TaskStatus.notStarted:
+        return "Not Started";
+      case TaskStatus.inProgress:
+        return "In Progress";
+      case TaskStatus.finished:
+        return "Finished";
+    }
+  }
 }
