@@ -14,7 +14,9 @@ class NavbarWidget extends StatelessWidget {
         return ConvexAppBar(
           style: TabStyle.reactCircle,
           gradient: LinearGradient(
-            colors: [Color(0xFF00bcc9), Color(0xFF004F8D)],
+            colors:
+            [Color(0xFF48BFE3),
+              Color(0xFF7400B8)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
