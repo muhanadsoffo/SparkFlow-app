@@ -24,7 +24,6 @@ class _QuotesPageState extends State<QuotesPage> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            NotificationSwitchWidget(),
             Expanded(
               child: ValueListenableBuilder(
                 valueListenable: Boxes.quotesBox.listenable(),

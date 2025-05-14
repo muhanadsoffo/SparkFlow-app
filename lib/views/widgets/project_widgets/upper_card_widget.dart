@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:spark_flow/views/Widgets/edit_item_widget.dart';
 
 import '../../../data/models/project.dart';
@@ -51,13 +52,18 @@ class UpperCardWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                project.title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  shadows: [Shadow(blurRadius: 10, color: Colors.black)],
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    project.title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      shadows: [Shadow(blurRadius: 10, color: Colors.black)],
+                    ),
+                  ),
                 ),
               ),
               if (editable)
@@ -68,21 +74,73 @@ class UpperCardWidget extends StatelessWidget {
                       builder: (context) {
                         return EditItemWidget(
                           initialValue: project.title,
-                          onSave: (newValue) {
-                            project.title = newValue;
-                            project.save();
-                            onChange();
-                          },
                           title: "Edit Title",
+                          onSave: (newValue) {
+                            if (newValue.length <= 20) {
+                              project.title = newValue;
+                              project.save();
+                              onChange();
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Title can't be longer than 20 characters."),
+                                  backgroundColor: Colors.red,
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                            }
+                          },
                         );
                       },
                     );
                   },
-                  icon: Icon(Icons.edit_outlined,color: Colors.white,),
+                  icon: Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                    shadows: [Shadow(blurRadius: 5)],
+                  ),
                 ),
+
             ],
           ),
         ),
+        if (editable)
+          Positioned(
+            top: 8,
+            right: 8,
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    final picked = await ImagePicker().pickImage(
+                      source: ImageSource.gallery,
+                    );
+                    if (picked != null) project.imagePath = picked.path;
+                    project.save();
+                    onChange();
+                  },
+                  icon: Icon(
+                    Icons.add_a_photo,
+                    color: Colors.white,
+                    shadows: [Shadow(blurRadius: 5)],
+                  ),
+                ),
+                if (project.imagePath != null)
+                  IconButton(
+                    icon: Icon(
+                      Icons.delete_sharp,
+                      color: Colors.white,
+                      shadows: [Shadow(blurRadius: 5)],
+                    ),
+                    onPressed: () {
+                      project.imagePath = null;
+                      project.save();
+                      onChange();
+                    },
+                  ),
+              ],
+            ),
+          ),
       ],
     );
   }

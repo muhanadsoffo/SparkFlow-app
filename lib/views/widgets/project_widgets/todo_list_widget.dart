@@ -20,7 +20,7 @@ class TodoListWidget extends StatelessWidget {
   Color _getStatusColor(TaskStatus status) {
     switch (status) {
       case TaskStatus.notStarted:
-        return Colors.grey;
+        return Colors.blueGrey;
       case TaskStatus.inProgress:
         return Colors.orange;
       case TaskStatus.finished:

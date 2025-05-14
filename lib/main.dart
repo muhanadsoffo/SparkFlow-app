@@ -8,27 +8,24 @@ import 'package:spark_flow/core/services/permission_service.dart';
 import 'package:spark_flow/data/local/hive_config.dart';
 import 'package:spark_flow/core/notifiers.dart';
 import 'package:spark_flow/views/widget_tree.dart';
+import 'package:spark_flow/views/widgets/user_name_widget.dart';
 
 import 'data/models/project.dart';
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService.init();
   await PermissionServices.requestNotificationPermission();
 
   await initHive();
 
-
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-
   State<MyApp> createState() => _MyAppState();
 }
 
@@ -41,26 +38,33 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(valueListenable: isDarkModeNotifier, builder: (context, darkMode, child) {
-      return MaterialApp(
-          theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Color(0xff7400B8),brightness:darkMode ? Brightness.dark : Brightness.light),),
+    return ValueListenableBuilder(
+      valueListenable: isDarkModeNotifier,
+      builder: (context, darkMode, child) {
+        return MaterialApp(
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Color(0xff7400B8),
+              brightness: darkMode ? Brightness.dark : Brightness.light,
+            ),
+          ),
           debugShowCheckedModeBanner: false,
-          home: WidgetTree()
-      );
-    },);
-
-
+          home: WidgetTree(),
+        );
+      },
+    );
   }
 
-  void initThemeMode() async{
+  void initThemeMode() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final bool? repeat = prefs.getBool(KConstants.themeModeKey);
     isDarkModeNotifier.value = repeat ?? false;
   }
-  void initNotifications() async{
+
+  void initNotifications() async {
     final prefs = await SharedPreferences.getInstance();
-    isDailyQuoteEnabled.value= prefs.getBool(KConstants.quoteNotificationKey) ?? false;
+    isDailyQuoteEnabled.value =
+        prefs.getBool(KConstants.quoteNotificationKey) ?? false;
   }
 }

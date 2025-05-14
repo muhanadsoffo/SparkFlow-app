@@ -27,14 +27,44 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     project = widget.project;
   }
 
+
   late Project project;
   TextEditingController controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.project.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("You are about to delete this Project!"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Cancel"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await project.delete();
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: Text("Delete"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            icon: Icon(Icons.delete),
+          ),
+        ],
         backgroundColor: Color(0xFF4EA8DE),
       ),
       body: SingleChildScrollView(

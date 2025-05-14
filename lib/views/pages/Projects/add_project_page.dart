@@ -106,6 +106,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                               alignment: Alignment.bottomLeft,
                               child: TextFormField(
                                 controller: titleController,
+                                maxLength: 20,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,

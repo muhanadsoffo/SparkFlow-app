@@ -21,9 +21,20 @@ class BottomCardWidget extends StatelessWidget {
     final index = TaskStatus.values.indexOf(current);
     return TaskStatus.values[(index + 1) % TaskStatus.values.length];
   }
+  Color _getStatusColor(TaskStatus status) {
+    switch (status) {
+      case TaskStatus.notStarted:
+        return Colors.blueGrey;
+      case TaskStatus.inProgress:
+        return Colors.orange;
+      case TaskStatus.finished:
+        return Colors.green;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final statusColor = _getStatusColor(project.status);
     final todos = project.todos ?? [];
     final done = todos.where((t) => t.status == TaskStatus.finished).length;
     final total = todos.length;
@@ -53,6 +64,7 @@ class BottomCardWidget extends StatelessWidget {
             onTap:
                 editable
                     ? () {
+
                       project.status = nextStatus(project.status);
                       project.save();
                       onChange();
@@ -62,8 +74,9 @@ class BottomCardWidget extends StatelessWidget {
               project.status.label,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: statusColor,
                 fontSize: editable ? 20 : 16,
+
               ),
             ),
           ),
@@ -94,12 +107,12 @@ class BottomCardWidget extends StatelessWidget {
                                 project.save();
                                 onChange();
                               },
-                              title: "Edit Title",
+                              title: "Edit Description",
                             );
                           },
                         );
                       },
-                      icon: Icon(Icons.edit),
+                      icon: Icon(Icons.edit,color: Colors.white,shadows: [Shadow(blurRadius: 5)],),
                     ),
                   ],
                 ),

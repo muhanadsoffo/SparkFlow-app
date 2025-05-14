@@ -20,7 +20,7 @@ class DailyQuoteService {
       currentIndex = 0;
     }
     final selectedQuote = quotes[currentIndex];
-    await prefs.setInt(KConstants.quoteIndexKey, currentIndex + 1);
+
 
     await NotificationService.scheduleDailyNotification(
       id: 3,
@@ -29,5 +29,10 @@ class DailyQuoteService {
       hour: hour,
       minute: minute,
     );
+    int nextIndex = currentIndex + 1;
+    if (nextIndex >= quotes.length) {
+      nextIndex = 0;
+    }
+    await prefs.setInt(KConstants.quoteIndexKey, nextIndex);
   }
 }

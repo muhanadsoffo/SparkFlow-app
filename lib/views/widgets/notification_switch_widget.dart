@@ -23,9 +23,11 @@ class _NotificationSwitchWidgetState extends State<NotificationSwitchWidget> {
       valueListenable: isDailyQuoteEnabled,
       builder: (context, value, child) {
         return SwitchListTile(
+
           title: const Text("Daily notification"),
           subtitle: Text(value ? "Enabled" : "Disabled"),
           value: value,
+
 
           onChanged: (value) async {
             isDailyQuoteEnabled.value = value;
