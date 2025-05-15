@@ -98,7 +98,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
             );
           },
           child: Icon(Icons.add),
-          backgroundColor: Color(0xfffc8300),
+          backgroundColor: Color(0xFF4EA8DE),
         ),
       ),
     );

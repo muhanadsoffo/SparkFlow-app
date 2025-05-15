@@ -60,44 +60,44 @@ class _AddProjectPageState extends State<AddProjectPage> {
                                 top: Radius.circular(16),
                               ),
                               image:
-                                  _selectedImage != null
-                                      ? DecorationImage(
-                                        image: FileImage(_selectedImage!),
-                                        fit: BoxFit.cover,
-                                      )
-                                      : null,
+                              _selectedImage != null
+                                  ? DecorationImage(
+                                image: FileImage(_selectedImage!),
+                                fit: BoxFit.cover,
+                              )
+                                  : null,
                               color:
-                                  _selectedImage == null ? Colors.grey : null,
+                              _selectedImage == null ? Colors.grey : null,
                             ),
                             child:
-                                _selectedImage == null
-                                    ? Center(
-                                      child: IconButton(
-                                        onPressed: () async {
+                            _selectedImage == null
+                                ? Center(
+                              child: IconButton(
+                                onPressed: () async {
 
-                                          final picked = await ImagePicker()
-                                              .pickImage(
-                                                source: ImageSource.gallery,
-                                              );
-                                          if (picked != null) {
-                                            setState(() {
-                                              _selectedImage = File(
-                                                picked.path,
-                                              );
-                                            });
-                                          }
-                                        },
-                                        icon: Icon(Icons.add_a_photo, size: 32),
-                                      ),
-                                    )
-                                    : null,
+                                  final picked = await ImagePicker()
+                                      .pickImage(
+                                    source: ImageSource.gallery,
+                                  );
+                                  if (picked != null) {
+                                    setState(() {
+                                      _selectedImage = File(
+                                        picked.path,
+                                      );
+                                    });
+                                  }
+                                },
+                                icon: Icon(Icons.add_a_photo, size: 32),
+                              ),
+                            )
+                                : null,
                           ),
                           Positioned(
                             left: 0,
                             right: 0,
                             bottom: 0,
                             child: Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(16),
@@ -150,12 +150,13 @@ class _AddProjectPageState extends State<AddProjectPage> {
 
                         decoration: BoxDecoration(
 
-                          gradient: LinearGradient(colors:[
-                            Color(0xFFff8000).withOpacity(0.90),
-                            Color(0xFFffe300).withOpacity(0.90)
-                          ],
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xFF74C0FC), // softer light blue
+                              Color(0xFF4EA8DE).withOpacity(0.5),
+                            ],
                             begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter
+                            end: Alignment.bottomCenter,
                           ),
                           borderRadius: BorderRadius.vertical(
                             bottom: Radius.circular(16),
@@ -166,10 +167,14 @@ class _AddProjectPageState extends State<AddProjectPage> {
                           children: [
                             TextFormField(
                               controller: descriptionController,
-                              maxLines: 3,
+                              maxLines: 4,
                               decoration: InputDecoration(
-                                labelText: "Description",
-                                border: OutlineInputBorder(),
+                                labelText: "Project Description",
+                                labelStyle: TextStyle(fontWeight: FontWeight.w600),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                               ),
                             ),
                             const SizedBox(height: 16),
@@ -181,8 +186,17 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 ),
                 const SizedBox(height: 10),
 
-                FilledButton(
-                  style: FilledButton.styleFrom(minimumSize: Size(250, 50)),
+                FilledButton.icon(
+                  icon: Icon(Icons.add),
+                  label: Text("Add Project"),
+                  style: FilledButton.styleFrom(
+                    minimumSize: Size(250, 50),
+                    textStyle: TextStyle(fontWeight: FontWeight.bold),
+                    backgroundColor: Color(0xFF4EA8DE),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   onPressed: () {
                     final title = titleController.text.trim();
                     final description = descriptionController.text.trim();
@@ -222,7 +236,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       );
                     }
                   },
-                  child: Text("Add"),
+
                 ),
               ],
             ),

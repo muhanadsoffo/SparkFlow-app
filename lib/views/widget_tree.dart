@@ -21,6 +21,7 @@ class _WidgetTreeState extends State<WidgetTree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppbarWidget(),
       body: ValueListenableBuilder(
         valueListenable: selectedPageNotifier,

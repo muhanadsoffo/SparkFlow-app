@@ -50,7 +50,8 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: WidgetTree(),
+
+          home: UserNameWidget(),
         );
       },
     );

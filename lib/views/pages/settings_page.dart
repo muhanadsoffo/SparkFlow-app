@@ -48,6 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(title: Text("Settings")),
       body: Column(
         children: [
+          Divider(color: Color(0xff7400B8), height: 4, thickness: 4),
           ListTile(
             leading: Icon(Icons.person),
             title: Text("Your name: $_name"),
@@ -62,8 +63,20 @@ class _SettingsPageState extends State<SettingsPage> {
                     onSave: (newValue) async{
                       final prefs = await SharedPreferences.getInstance();
                       _name = newValue;
-                      prefs.setString(KConstants.userNameKey, newValue);
-                      setState(() {});
+                      if(newValue.isNotEmpty && newValue.length <=15 ){
+                        prefs.setString(KConstants.userNameKey, newValue);
+                        setState(() {});
+                      }else if (newValue.length > 15){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: Duration(seconds: 5),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.red,
+                            content: Text("Name is too long, should be 15 letters or less"),
+                          ),
+                        );
+                      }
+
                     },
                   );
                 },

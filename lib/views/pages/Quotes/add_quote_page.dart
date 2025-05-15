@@ -21,67 +21,99 @@ class _AddQuotePageState extends State<AddQuotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( title: Text("Add a Quote"),
-        backgroundColor: Color(0xFFff8000),),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Align(alignment: Alignment.topCenter),
+      appBar: AppBar(
+        title: Text("Add a Quote"),
+        backgroundColor: Color(0xFF7400B8),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 30),
+            Text(
+              "🧠 Add a Quote to Inspire Yourself",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
 
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              "Add a Quote, talk to yourself !",
-              style: TextStyle(fontSize: 25),
+              ),
+              textAlign: TextAlign.center,
             ),
-          ),
-          SizedBox(height: 15),
-          TextField(
-            controller: controller,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter a Quote',
+            const SizedBox(height: 30),
+
+            // Input box
+            TextField(
+              controller: controller,
+              maxLines: 4,
+              style: TextStyle(fontSize: 16),
+              decoration: InputDecoration(
+                hintText: "Write your motivational quote here...",
+                filled: true,
+                fillColor: Colors.grey[100],
+                contentPadding: EdgeInsets.all(16),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
             ),
-          ),
-          SizedBox(height: 15),
-          FilledButton(
-            onPressed: () {
-              final title = controller.text.trim();
-              if (title.isNotEmpty) {
-                setState(() async{
-                  Boxes.quotesBox.put('key_$title', Quote(title, true));
-                  final prefs = await SharedPreferences.getInstance();
-                  final isEnabled = prefs.getBool(KConstants.quoteNotificationKey) ?? false;
-                  if(isEnabled){
-                    await NotificationService.cancelNotification(3);
-                    await DailyQuoteService.scheduleDailyQuoteNotification();
+
+            const SizedBox(height: 30),
+
+            // Add Button
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: () async {
+                  final title = controller.text.trim();
+                  if (title.isNotEmpty) {
+                    Boxes.quotesBox.put('key_$title', Quote(title, true));
+
+                    final prefs = await SharedPreferences.getInstance();
+                    final isEnabled = prefs.getBool(KConstants.quoteNotificationKey) ?? false;
+
+                    if (isEnabled) {
+                      await NotificationService.cancelNotification(3);
+                      await DailyQuoteService.scheduleDailyQuoteNotification();
+                    }
+
+                    controller.clear();
+                    FocusScope.of(context).unfocus();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        duration: Duration(seconds: 4),
+                        backgroundColor: Colors.green,
+                        content: Text("✅ Quote added successfully!"),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        duration: Duration(seconds: 4),
+                        backgroundColor: Colors.redAccent,
+                        content: Text("⚠️ Please enter a quote before saving."),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
                   }
-                  controller.clear();
-                  FocusScope.of(context).unfocus();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      duration: Duration(seconds: 5),
-                      behavior: SnackBarBehavior.floating,
-                      backgroundColor: Colors.green,
-                      content: Text("Quote added successfully!"),
-                    ),
-                  );
-                });
-              } else if (title.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    duration: Duration(seconds: 5),
-                    behavior: SnackBarBehavior.floating,
-                    backgroundColor: Colors.red,
-                    content: Text("Text should not be empty"),
+                },
+                icon: Icon(Icons.add_comment_rounded,color: Colors.white,),
+                label: Text("Add Quote",style: TextStyle(color: Colors.white),),
+                style: FilledButton.styleFrom(
+                  backgroundColor: Color(0xFF7400B8),
+                  padding: EdgeInsets.symmetric(vertical: 14),
+                  textStyle: TextStyle(fontSize: 16,),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                );
-              }
-            },
-            child: Text("Add a Quote"),
-          ),
-        ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
+
   }
 }

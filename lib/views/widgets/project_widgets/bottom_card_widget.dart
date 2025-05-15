@@ -21,6 +21,7 @@ class BottomCardWidget extends StatelessWidget {
     final index = TaskStatus.values.indexOf(current);
     return TaskStatus.values[(index + 1) % TaskStatus.values.length];
   }
+
   Color _getStatusColor(TaskStatus status) {
     switch (status) {
       case TaskStatus.notStarted:
@@ -61,10 +62,10 @@ class BottomCardWidget extends StatelessWidget {
 
         children: [
           InkWell(
+            splashColor: Colors.purple,
             onTap:
                 editable
                     ? () {
-
                       project.status = nextStatus(project.status);
                       project.save();
                       onChange();
@@ -76,10 +77,10 @@ class BottomCardWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: statusColor,
                 fontSize: editable ? 20 : 16,
-
               ),
             ),
           ),
+
           if (editable)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +113,11 @@ class BottomCardWidget extends StatelessWidget {
                           },
                         );
                       },
-                      icon: Icon(Icons.edit,color: Colors.white,shadows: [Shadow(blurRadius: 5)],),
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        shadows: [Shadow(blurRadius: 5)],
+                      ),
                     ),
                   ],
                 ),
@@ -134,7 +139,7 @@ class BottomCardWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: editable ? 20 : 13,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF9a031e),
+                  color: Color(0xFF7400B8),
                 ),
               ),
               Text(
