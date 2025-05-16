@@ -1,15 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:spark_flow/views/widgets/project_widgets/add_task_widget.dart';
 import 'package:spark_flow/views/widgets/project_widgets/bottom_card_widget.dart';
 import 'package:spark_flow/views/widgets/project_widgets/todo_list_widget.dart';
 import 'package:spark_flow/views/widgets/project_widgets/upper_card_widget.dart';
-
 import '../../../data/models/project.dart';
-import '../../../data/models/task_status.dart';
-import '../../../data/models/todos.dart';
 
 class ProjectDetails extends StatefulWidget {
   const ProjectDetails({super.key, required this.project});
@@ -27,12 +21,11 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     project = widget.project;
   }
 
-
   late Project project;
   TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.project.title),
@@ -69,7 +62,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

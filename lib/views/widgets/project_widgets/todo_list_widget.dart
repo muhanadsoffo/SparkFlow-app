@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:spark_flow/data/models/project.dart';
 import 'package:spark_flow/data/models/task_status.dart';
+import 'package:spark_flow/views/Widgets/edit_item_widget.dart';
 
 class TodoListWidget extends StatelessWidget {
   final Project project;
@@ -38,38 +40,81 @@ class TodoListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         final todo = todos[index];
         final statusColor = _getStatusColor(todo.status);
-        return Card(
-          elevation: 2,
-          margin: const EdgeInsets.symmetric(vertical: 6),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+        return Slidable(
+          key: ValueKey(todo.text),
+          endActionPane: ActionPane(
+            motion: DrawerMotion(),
+            extentRatio: 0.4,
+            children: [
+              SlidableAction(
+
+                onPressed: (context) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return EditItemWidget(
+                        initialValue: todo.text,
+                        onSave: (newValue) {
+                          final trimmed = newValue.trim();
+                          if (trimmed.isNotEmpty) {
+                            todo.text = trimmed;
+                            project.save();
+                            onStatusChanged();
+                          }
+                        },
+                      );
+                    },
+                  );
+                },
+                backgroundColor: Colors.blueAccent,
+                icon: Icons.edit,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              SlidableAction(
+                onPressed: (context) {
+                  project.todos?.removeAt(index);
+                  project.save();
+                  onStatusChanged();
+                },
+                icon: Icons.delete,
+                backgroundColor: Colors.red,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ],
           ),
-          child: ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-            leading: Icon(Icons.check_circle, color: statusColor),
-            title: Text(
-              todo.text,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          child: Card(
+            elevation: 2,
+            margin: const EdgeInsets.symmetric(vertical: 6),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
-            trailing: InkWell(
-              onTap: () {
-                todo.status = nextStatus(todo.status);
-                project.save();
-                onStatusChanged();
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: statusColor.withOpacity(0.2),
-                  border: Border.all(color: statusColor),
-                ),
-                child: Text(
-                  todo.status.label,
-                  style: TextStyle(
-                    color: statusColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+              leading: Icon(Icons.check_circle, color: statusColor),
+              title: Text(
+                todo.text,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+              trailing: InkWell(
+                onTap: () {
+                  todo.status = nextStatus(todo.status);
+                  project.save();
+                  onStatusChanged();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: statusColor.withOpacity(0.2),
+                    border: Border.all(color: statusColor),
+                  ),
+                  child: Text(
+                    todo.status.label,
+                    style: TextStyle(
+                      color: statusColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
                   ),
                 ),
               ),
