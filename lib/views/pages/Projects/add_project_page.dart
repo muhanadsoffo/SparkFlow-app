@@ -30,7 +30,9 @@ class _AddProjectPageState extends State<AddProjectPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: AppbarWidget(),
+        appBar: AppBar(
+          title:Text('Project Card') ,
+          backgroundColor: Color(0xFF4EA8DE),),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 25),

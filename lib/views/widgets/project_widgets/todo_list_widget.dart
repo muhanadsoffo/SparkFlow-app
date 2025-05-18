@@ -87,6 +87,7 @@ class TodoListWidget extends StatelessWidget {
                 ],
               ),
               child: Card(
+                color: Colors.white70,
                 margin: EdgeInsets.only( bottom: 2,left: 2,right: 2),
                 elevation: 2,
                 shape: RoundedRectangleBorder(
@@ -97,7 +98,7 @@ class TodoListWidget extends StatelessWidget {
                   leading: Icon(Icons.check_circle, color: statusColor),
                   title: Text(
                     todo.text,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   trailing: InkWell(
                     onTap: () {

@@ -41,6 +41,7 @@ class _QuotesPageState extends State<QuotesPage> {
                       if (quote == null) return SizedBox();
 
                       return Card(
+                        color: Colors.white30,
                         margin: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
