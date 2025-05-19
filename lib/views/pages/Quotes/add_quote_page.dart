@@ -5,6 +5,7 @@ import 'package:spark_flow/core/services/daily_quote_service.dart';
 import 'package:spark_flow/core/services/notification_service.dart';
 import 'package:spark_flow/data/models/quote.dart';
 
+import '../../../core/services/alarm_manger_service.dart' as AlarmMangerService;
 import '../../../data/local/boxes.dart';
 import '../../Widgets/appbar_widget.dart';
 
@@ -75,6 +76,7 @@ class _AddQuotePageState extends State<AddQuotePage> {
                     if (isEnabled) {
                       await NotificationService.cancelNotification(3);
                       await DailyQuoteService.scheduleDailyQuoteNotification();
+                      AlarmMangerService.scheduleAlarmManagerQuote();
                     }
 
                     controller.clear();

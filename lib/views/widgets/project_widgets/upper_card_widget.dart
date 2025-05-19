@@ -32,7 +32,7 @@ class UpperCardWidget extends StatelessWidget {
                 image:
                     project.imagePath != null
                         ? FileImage(File(project.imagePath!))
-                        : AssetImage('assets/images/l.png'),
+                        : AssetImage('assets/images/flog.png'),
                 fit: BoxFit.cover,
               ),
               color: project.imagePath == null ? Colors.grey[300] : null,

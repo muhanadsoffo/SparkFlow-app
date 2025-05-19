@@ -40,7 +40,7 @@ class _AnimatedTextWidgetState extends State<AnimatedTextWidget> {
               colors: [Colors.purple, Colors.indigo, Colors.blue, Colors.teal],
             ),
             TypewriterAnimatedText(
-              'Keep your Spark alive and Flowing...',
+              'Let\'s bring your ideas to life today',
               textStyle: const TextStyle(
                 fontSize: 19,
                 fontStyle: FontStyle.italic,
@@ -54,7 +54,7 @@ class _AnimatedTextWidgetState extends State<AnimatedTextWidget> {
         ),
         const SizedBox(height: 16),
         Text(
-          '✨ Let\'s bring your ideas to life today ✨',
+          '✨ Keep your Spark alive and Flowing ✨',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,

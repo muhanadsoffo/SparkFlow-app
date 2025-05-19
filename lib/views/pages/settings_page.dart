@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spark_flow/core/constants.dart';
 import 'package:spark_flow/views/Widgets/edit_item_widget.dart';
 import 'package:spark_flow/views/widgets/notification_switch_widget.dart';
 
+import '../../core/services/alarm_manger_service.dart' as AlarmMangerService;
 import '../../core/services/daily_quote_service.dart';
 import '../../core/services/notification_service.dart';
 
@@ -20,9 +22,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
+    super.initState();
     loadSavedTime();
     loadUserName();
-    super.initState();
   }
 
   void loadUserName() async {
@@ -34,9 +36,9 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void loadSavedTime() async {
-    final prefs = await SharedPreferences.getInstance();
-    int hour = prefs.getInt(KConstants.notificationHoursKey) ?? 10;
-    int minute = prefs.getInt(KConstants.notificationMinsKey) ?? 0;
+    final metaBox = Hive.box('quote_meta');
+    final hour = metaBox.get('hour', defaultValue: 10);
+    final minute = metaBox.get('minute', defaultValue: 0);
     setState(() {
       _selectedTime = TimeOfDay(hour: hour, minute: minute);
     });
@@ -114,6 +116,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 setState(() {
                   _selectedTime = picked;
                 });
+                final metaBox = Hive.box('quote_meta');
+                await metaBox.put('hour', picked.hour);
+                await metaBox.put('minute', picked.minute);
                 await prefs.setInt(
                   KConstants.notificationHoursKey,
                   picked.hour,
@@ -126,6 +131,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 // Schedule again with new time
                 await DailyQuoteService.scheduleDailyQuoteNotification();
+                AlarmMangerService.scheduleAlarmManagerQuote();
               }
             },
           ),

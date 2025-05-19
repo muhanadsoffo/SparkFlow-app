@@ -8,6 +8,8 @@ import 'package:spark_flow/core/services/notification_service.dart';
 import 'package:spark_flow/data/models/quote.dart';
 import 'package:workmanager/workmanager.dart';
 
+import '../../core/services/alarm_manger_service.dart' as AlarmMangerService;
+
 class NotificationSwitchWidget extends StatefulWidget {
   const NotificationSwitchWidget({super.key});
 
@@ -39,6 +41,7 @@ class _NotificationSwitchWidgetState extends State<NotificationSwitchWidget> {
 
             if (isDailyQuoteEnabled.value == true) {
               await DailyQuoteService.scheduleDailyQuoteNotification();
+              AlarmMangerService.scheduleAlarmManagerQuote();
             } else {
               await NotificationService.cancelNotification(3);
               final box = Hive.box<Quote>('quotes');

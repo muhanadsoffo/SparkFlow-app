@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Icon(Icons.format_quote_rounded,color: Colors.yellowAccent,shadows: [Shadow(blurRadius: 6)],size: 30,),
                   Text(
-                    " Quote of the Day:",
+                    " Quote Section:",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
 

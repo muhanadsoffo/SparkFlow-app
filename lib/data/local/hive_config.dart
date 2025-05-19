@@ -18,4 +18,5 @@ Future<void> initHive() async {
   await Hive.openBox<Quote>('quotes');
   await Hive.openBox<Project>('projects');
   await Hive.openBox<Todos>('todos');
+  await Hive.openBox('quote_meta');
 }
