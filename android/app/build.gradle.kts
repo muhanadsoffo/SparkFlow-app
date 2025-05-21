@@ -30,18 +30,25 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled =true
     }
 
     buildTypes {
         release {
+            getByName("release") {
+                isMinifyEnabled = false
+                isShrinkResources = false
+            }
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+    
 }
 
 dependencies {
+
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     // other dependencies...
 }

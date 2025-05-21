@@ -57,6 +57,7 @@ dependencies:
   animated_text_kit: ^4.2.3
   android_alarm_manager_plus: ^4.0.7
   flutter_timezone: ^4.1.0
+  device_info_plus: ^11.4.0
 
 
 dev_dependencies:

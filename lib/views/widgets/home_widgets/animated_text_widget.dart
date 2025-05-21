@@ -45,6 +45,7 @@ class _AnimatedTextWidgetState extends State<AnimatedTextWidget> {
                 fontSize: 19,
                 fontStyle: FontStyle.italic,
                 color: Colors.lightBlue,
+                fontWeight: FontWeight.bold
               ),
               speed: Duration(milliseconds: 80),
             ),
@@ -53,14 +54,17 @@ class _AnimatedTextWidgetState extends State<AnimatedTextWidget> {
           pause: Duration(milliseconds: 1000),
         ),
         const SizedBox(height: 16),
-        Text(
-          '✨ Keep your Spark alive and Flowing ✨',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.grey[700],
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            '✨ Keep your Spark alive and Flowing ✨',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
         ),
       ],
     );

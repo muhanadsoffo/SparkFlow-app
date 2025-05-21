@@ -23,14 +23,14 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
             TextSpan(
               text: "Spark",
               style: TextStyle(
-                color: Color(0xff48BFE3),
+                color: Colors.white,
                 fontSize: 30, // orange
               ),
             ),
             TextSpan(
               text: "Flow",
               style: TextStyle(
-                color: Color(0xff7400B8),
+                color: Color(0xff7904a2),
                 fontSize: 30, // deep blue
               ),
             ),

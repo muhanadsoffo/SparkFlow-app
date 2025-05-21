@@ -14,13 +14,13 @@ class EmptyPageWidget extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 60,
-              backgroundImage: AssetImage('assets/images/logo.png'),
+              backgroundImage: AssetImage('assets/images/flog.png'),
             ),
             SizedBox(height: 20),
             Text(
               "No $title yet.\nStart by adding something that inspires you!",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18, color: Colors.grey[700]),
+              style: TextStyle(fontSize: 18,),
             ),
           ],
         ),

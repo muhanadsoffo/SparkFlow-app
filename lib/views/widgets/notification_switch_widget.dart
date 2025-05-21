@@ -5,8 +5,9 @@ import 'package:spark_flow/core/constants.dart';
 import 'package:spark_flow/core/notifiers.dart';
 import 'package:spark_flow/core/services/daily_quote_service.dart';
 import 'package:spark_flow/core/services/notification_service.dart';
+import 'package:spark_flow/core/services/permission_service.dart';
 import 'package:spark_flow/data/models/quote.dart';
-import 'package:workmanager/workmanager.dart';
+
 
 import '../../core/services/alarm_manger_service.dart' as AlarmMangerService;
 
@@ -40,6 +41,7 @@ class _NotificationSwitchWidgetState extends State<NotificationSwitchWidget> {
             );
 
             if (isDailyQuoteEnabled.value == true) {
+              PermissionServices.requestNotificationPermission();
               await DailyQuoteService.scheduleDailyQuoteNotification();
               AlarmMangerService.scheduleAlarmManagerQuote();
             } else {

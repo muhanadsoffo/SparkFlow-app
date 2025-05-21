@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(Icons.bar_chart,color: Colors.yellowAccent,shadows: [Shadow(blurRadius: 6)],size: 30,),
+                  Icon(Icons.bar_chart_sharp,color: Colors.yellowAccent,shadows: [Shadow(blurRadius: 6)],size: 30,),
                   Text(
                     " Projects Chart:",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(Icons.format_quote_rounded,color: Colors.yellowAccent,shadows: [Shadow(blurRadius: 6)],size: 30,),
+                  Icon(Icons.format_quote_sharp,color: Colors.yellowAccent,shadows: [Shadow(blurRadius: 6)],size: 30,),
                   Text(
                     " Quote Section:",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),

@@ -1,16 +1,24 @@
-# spark_flow
+# 🔥 SparkFlow
 
-A new Flutter project.
+> A productivity-focused Flutter Android app that helps you stay inspired and track your goals.
 
-## Getting Started
+SparkFlow combines daily motivational quotes and a beautiful project management system to help you stay on track and motivated — every single day.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## ✨ Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 📆 Schedule and receive **daily inspirational quote notifications**
+- 🗂️ Track your **projects** with status and to-do lists
+- 🎨 Beautiful UI with animated text, gradients, and charts
+- 📊 Visual **pie chart breakdown** of your task progress
+- 💾 Data is stored locally using **Hive** and **SharedPreferences**
+- 🕹️ Lightweight and fully offline-capable
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+### Prerequisites
+
+- Flutter SDK (>= 3.10)
+- Dart >= 3.0
+- Android Studio / VS Code
+

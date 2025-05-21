@@ -1,8 +1,16 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionServices {
 
   static Future<bool> requestNotificationPermission() async{
+    if (Platform.isAndroid) {
+      // Only needed for Android 13+ (API 33)
+      final sdkInt = (await DeviceInfoPlugin().androidInfo).version.sdkInt;
+      if (sdkInt < 33) return true;
+    }
     final status = await Permission.notification.status;
     if (status.isGranted){
       return true;

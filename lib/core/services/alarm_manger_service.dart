@@ -16,6 +16,7 @@ Future<void> dailyQuoteAlarmCallback() async {
   debugPrint("🚨 Alarm callback triggered!");
 
   await DailyQuoteService.scheduleDailyQuoteNotification();
+  await NotificationService.scheduleDailyStaticReminder();
 }
 
 void scheduleAlarmManagerQuote() async {

@@ -47,7 +47,7 @@ class _AddQuotePageState extends State<AddQuotePage> {
             TextField(
               controller: controller,
               maxLines: 4,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16,color: Colors.black),
               decoration: InputDecoration(
                 hintText: "Write your motivational quote here...",
                 filled: true,
@@ -55,6 +55,7 @@ class _AddQuotePageState extends State<AddQuotePage> {
                 contentPadding: EdgeInsets.all(16),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
+
                 ),
               ),
             ),
