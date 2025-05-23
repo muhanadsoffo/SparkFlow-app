@@ -33,6 +33,7 @@ class NotificationService {
 
       importance: Importance.max,
       priority: Priority.high,
+      styleInformation: BigTextStyleInformation(''),
     );
 
     const details = NotificationDetails(android: androidDetails);
@@ -61,6 +62,7 @@ class NotificationService {
           channelDescription: 'Default notification channel for SparkFlow',
           importance: Importance.max,
           priority: Priority.high,
+          styleInformation: BigTextStyleInformation(''),
         ),
       ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle, // ✅ NEW
